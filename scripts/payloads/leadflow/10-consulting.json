@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "lead.consulting@example.com",
+  "phone": "+55 11 90000-0007",
+  "company": "Example Advisory",
+  "service": "Consulting",
+  "budget": "3000",
+  "message": "Looking for a short engagement to map which steps should be automated."
+}

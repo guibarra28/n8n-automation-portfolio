@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "lead.automation-discovery@example.com",
+  "phone": "+55 11 90000-0006",
+  "company": "Example Ops New",
+  "service": "zapier",
+  "budget": "not sure",
+  "message": "We copy form replies into a sheet by hand and want that to stop."
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "lead.growth@example.com",
+  "phone": "+55 21 90000-0001",
+  "company": "Example Growth",
+  "service": "website",
+  "budget": "1500",
+  "message": "Marketing site with a blog and a quote form."
+}

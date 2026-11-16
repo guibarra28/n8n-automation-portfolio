@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "formula.lead@example.com",
+  "phone": "+55 11 90000-0010",
+  "company": "=1+1",
+  "service": "automation",
+  "budget": "800",
+  "message": "The company field starts with an equals sign and must be stored as text."
+}

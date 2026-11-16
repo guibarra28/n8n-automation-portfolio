@@ -1,0 +1,30 @@
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+client_secret*.json
+token.json
+secrets/
+
+# n8n local data
+.n8n/
+n8n_data/
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Editor and OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log

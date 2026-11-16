@@ -1,0 +1,6 @@
+{
+  "name": "Sample Lead",
+  "email": "not-an-email",
+  "service": "automation",
+  "message": "This should be rejected before the model is called."
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "lead.automation-enterprise@example.com",
+  "phone": "+55 11 90000-0005",
+  "company": "Example Ops Large",
+  "service": "automation",
+  "budget": "20000",
+  "message": "Several internal workflows, with a review step before anything is sent."
+}

@@ -1,0 +1,6 @@
+[
+  { "file": "01-valid-project.json", "expect": [200] },
+  { "file": "02-prompt-injection.json", "expect": [200] },
+  { "file": "03-invalid-email.json", "expect": [400] },
+  { "file": "04-missing-fields.json", "expect": [400] }
+]

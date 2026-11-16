@@ -1,0 +1,12 @@
+title = "Portfolio secret scan"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Placeholders and example inboxes used in the sample workflows"
+regexes = [
+  '''YOUR_SHEET_ID''',
+  '''PLACEHOLDER''',
+  '''replace-with-''',
+]

@@ -1,0 +1,16 @@
+[
+  { "file": "01-web-starter.json", "expect": [200], "rule": "web_starter" },
+  { "file": "02-duplicate-web-starter.json", "expect": [200], "rule": "duplicate of 01" },
+  { "file": "03-web-project-growth.json", "expect": [200], "rule": "web_project" },
+  { "file": "04-web-project-scale.json", "expect": [200], "rule": "web_project" },
+  { "file": "05-web-enterprise.json", "expect": [200], "rule": "web_enterprise" },
+  { "file": "06-web-discovery.json", "expect": [200], "rule": "web_discovery" },
+  { "file": "07-automation.json", "expect": [200], "rule": "automation" },
+  { "file": "08-automation-enterprise.json", "expect": [200], "rule": "automation_enterprise" },
+  { "file": "09-automation-discovery.json", "expect": [200], "rule": "automation_discovery" },
+  { "file": "10-consulting.json", "expect": [200], "rule": "consulting" },
+  { "file": "11-general.json", "expect": [200], "rule": "general" },
+  { "file": "12-invalid-email.json", "expect": [400], "rule": "rejected" },
+  { "file": "13-missing-fields.json", "expect": [400], "rule": "rejected" },
+  { "file": "14-formula-injection.json", "expect": [200], "rule": "stored as text" }
+]
