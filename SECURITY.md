@@ -46,11 +46,11 @@ Invalid leads get HTTP 400 and a list of error codes such as `invalid_email` or 
 
 When a Google Sheets or model call fails, the caller gets HTTP 503 and `{ "ok": false, "status": "unavailable" }`. Provider error text stays in the n8n execution log. The Errors tab stores a fixed reason code.
 
-There is a second safety net: the error-logger workflow. It runs when a workflow fails without handling the error. It stores a redacted first line and emails the team. It drops the stack trace, the execution URL, and the request body.
+There is a second safety net: the error-logger workflow. It runs when a workflow fails without handling the error. It stores a redacted first line and emails the team. The redaction covers bearer values, Slack tokens, and GitHub tokens (`ghp_`, `gho_`, `ghu_`, `ghs_`, `ghr_`, and `github_pat_`). It drops the stack trace, the execution URL, and the request body.
 
 ## Formula injection
 
-Every value written to Google Sheets passes through `sanitizeCell`. If a line starts with `=`, `+`, `-`, `@`, or a tab or carriage return, the value is prefixed with `'`. Append nodes set the cell format to RAW, so Google Sheets stores the text instead of evaluating it. Phone numbers that start with `+` get the same prefix. That is deliberate: a CSV export opened in a spreadsheet would otherwise treat them as formulas.
+Every value written to Google Sheets passes through `sanitizeCell`. Before the formula check, each line drops leading Unicode spaces and invisible characters (no-break space, zero-width space, the byte-order mark, ideographic space, and the other Zs and Cf characters). A fullwidth `＝`, `＋`, `－`, or `＠` in the trigger position is treated as `=`, `+`, `-`, or `@`. If a line then starts with `=`, `+`, `-`, `@`, or a tab or carriage return, the value is prefixed with `'`. Append nodes set the cell format to RAW, so Google Sheets stores the text instead of evaluating it. Phone numbers that start with `+` get the same prefix. That is deliberate: a CSV export opened in a spreadsheet would otherwise treat them as formulas.
 
 ## HTML and Slack
 
@@ -88,6 +88,8 @@ n8n does not provide a per-webhook quota in these examples. For a reachable inst
 ## Local n8n
 
 `docker-compose.yml` is for a laptop. n8n 1.0 removed HTTP basic auth. On first open, create an owner account with a long password. That account is the login. The task runner is a sidecar on the Docker network. `N8N_RUNNERS_BROKER_LISTEN_ADDRESS=0.0.0.0` lets that sidecar connect. The host firewall never sees port 5679 because the compose file does not publish it.
+
+The images are pinned to tag `2.47.7` so this demo stays on a known n8n release. For anything other than a local demo, pin `n8nio/n8n` and `n8nio/runners` by digest so a retagged image cannot change what you run.
 
 `N8N_SECURE_COOKIE` is false so the localhost HTTP editor can keep a session. Turn it on when you serve n8n over HTTPS.
 

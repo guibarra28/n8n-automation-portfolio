@@ -6,6 +6,7 @@
 
 services:
   n8n:
+    # Tag pin is enough for a local demo. Pin this image by digest outside a demo.
     image: n8nio/n8n:2.47.7
     restart: unless-stopped
     ports:
@@ -38,6 +39,7 @@ services:
       - n8n_data:/home/node/.n8n
 
   task-runners:
+    # Tag pin is enough for a local demo. Pin this image by digest outside a demo.
     image: n8nio/runners:2.47.7
     restart: unless-stopped
     environment:

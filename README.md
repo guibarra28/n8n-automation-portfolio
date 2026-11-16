@@ -50,7 +50,7 @@ cp .env.example .env
 docker compose up -d
 ```
 
-Open `http://127.0.0.1:5678` and create the owner account. n8n no longer supports HTTP basic auth. That owner account is the login. The port is bound to localhost, and the task-runner port is not published. `SECURITY.md` explains the choices.
+Open `http://127.0.0.1:5678` and create the owner account. n8n no longer supports HTTP basic auth. That owner account is the login. The port is bound to localhost, and the task-runner port is not published. The compose images are pinned to tag `2.47.7` for this demo; pin them by digest for any other use. `SECURITY.md` explains the choices.
 
 Then import the workflows, listen on the webhook, and send the samples:
 

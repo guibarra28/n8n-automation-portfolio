@@ -4,9 +4,59 @@
  * Keep the functions free of Node-only APIs so they run inside the n8n task runner.
  */
 
+const FULLWIDTH_FORMULA = {
+  '\uFF1D': '=', // ＝
+  '\uFF0B': '+', // ＋
+  '\uFF0D': '-', // －
+  '\uFF20': '@', // ＠
+};
+
+function isHiddenLeadChar(char) {
+  if (char === ' ' || char === '\t') return false;
+  return /[\p{Zs}\p{Cf}]/u.test(char);
+}
+
+function normalizeFormulaLine(line) {
+  const chars = Array.from(line);
+  let index = 0;
+  let lead = '';
+  while (index < chars.length) {
+    const char = chars[index];
+    if (char === ' ' || char === '\t') {
+      lead += char;
+      index += 1;
+      continue;
+    }
+    if (isHiddenLeadChar(char)) {
+      index += 1;
+      continue;
+    }
+    break;
+  }
+  const rest = chars.slice(index);
+  if (rest.length && Object.prototype.hasOwnProperty.call(FULLWIDTH_FORMULA, rest[0])) {
+    rest[0] = FULLWIDTH_FORMULA[rest[0]];
+  }
+  return lead + rest.join('');
+}
+
+function normalizeFormulaText(value) {
+  let line = '';
+  let out = '';
+  for (const char of value) {
+    if (char === '\n' || char === '\r') {
+      out += normalizeFormulaLine(line) + char;
+      line = '';
+    } else {
+      line += char;
+    }
+  }
+  return out + normalizeFormulaLine(line);
+}
+
 export function sanitizeCell(value) {
   if (value === null || value === undefined) return '';
-  let str = String(value).replace(/\u0000/g, '');
+  let str = normalizeFormulaText(String(value).replace(/\u0000/g, ''));
   // A formula or CSV injection can sit on the first line or on any later line.
   const risky = /(^|[\n\r])[\t ]*[=+\-@]/.test(str) || /^[\t\r]/.test(str);
   if (risky) str = "'" + str;
@@ -35,6 +85,8 @@ export function redactError(value) {
   let text = String(value ?? 'unknown error').split('\n')[0];
   text = text.replace(/Bearer\s+\S+/gi, 'Bearer [redacted]');
   text = text.replace(/\b(?:sk|rk|pk)[-_][A-Za-z0-9]{8,}\b/g, '[redacted]');
+  text = text.replace(/\bxox[baprs]-[A-Za-z0-9-]{10,}/g, '[redacted]');
+  text = text.replace(/\b(?:gh[pousr]_|github_pat_)[A-Za-z0-9_]{20,}/g, '[redacted]');
   text = text.replace(/\bAI[a-z]{2}[0-9A-Za-z\-_]{10,}\b/g, '[redacted]');
   text = text.replace(/\bya29\.[0-9A-Za-z\-_]+\b/g, '[redacted]');
   text = text.replace(/[A-Za-z0-9+/]{40,}={0,2}/g, '[redacted]');

@@ -50,6 +50,22 @@ eq(sanitizeCell('  =1+1'), "'  =1+1", 'leading space before formula');
 eq(sanitizeCell('Jane Doe'), 'Jane Doe', 'plain text unchanged');
 eq(sanitizeCell('lead.sample@example.com'), 'lead.sample@example.com', 'email unchanged');
 eq(sanitizeCell(null), '', 'null cell');
+eq(sanitizeCell('\u00A0=1+1'), "'=1+1", 'nbsp before formula');
+eq(sanitizeCell('\u200B=1+1'), "'=1+1", 'zwsp before formula');
+eq(sanitizeCell('\uFEFF=1+1'), "'=1+1", 'bom before formula');
+eq(sanitizeCell('\u3000=1+1'), "'=1+1", 'ideographic space before formula');
+eq(sanitizeCell('\u2003=1+1'), "'=1+1", 'em space before formula');
+eq(sanitizeCell('\u200E=1+1'), "'=1+1", 'ltr mark before formula');
+eq(sanitizeCell(' \u00A0=1+1'), "' =1+1", 'space then nbsp before formula');
+eq(sanitizeCell('safe\n\uFEFF=1+1'), "'safe\n=1+1", 'bom on a later line');
+eq(sanitizeCell('\uFF1D1+1'), "'=1+1", 'fullwidth equals');
+eq(sanitizeCell('\uFF0B1'), "'+1", 'fullwidth plus');
+eq(sanitizeCell('\uFF0D1'), "'-1", 'fullwidth hyphen');
+eq(sanitizeCell('\uFF20cmd'), "'@cmd", 'fullwidth at');
+eq(sanitizeCell('\u00A0\u200B\uFF1D1+1'), "'=1+1", 'hidden lead then fullwidth equals');
+eq(sanitizeCell('\u00A0Jane'), 'Jane', 'leading nbsp stripped from plain text');
+eq(sanitizeCell('Jane\u00A0Doe'), 'Jane\u00A0Doe', 'internal nbsp kept');
+eq(sanitizeCell('Acme\uFF1DStudio'), 'Acme\uFF1DStudio', 'fullwidth equals inside text kept');
 
 // HTML and Slack
 eq(escapeHtml(`<script>"&'</script>`), '&lt;script&gt;&quot;&amp;&#39;&lt;/script&gt;', 'html escape');
@@ -250,6 +266,23 @@ assert(!assertHttpsUrl('not a url').ok, 'garbage url rejected');
 const redacted = redactError('Bearer example-token-value request failed');
 assert(!redacted.includes('example-token-value'), 'bearer token redacted');
 assert(!redacted.includes('\n'), 'redaction keeps one line');
+
+const slackToken = 'xox' + 'b-' + 'fake-not-a-real-token';
+const githubToken = 'gh' + 'p_' + 'exampleexampleexample';
+const githubPat = 'github' + '_pat_' + 'exampleexampleexample';
+const tokenLine = redactError('failed ' + slackToken + ' then ' + githubToken + ' then ' + githubPat);
+assert(!tokenLine.includes(slackToken), 'slack token redacted');
+assert(!tokenLine.includes(githubToken), 'github token redacted');
+assert(!tokenLine.includes(githubPat), 'github pat redacted');
+assert(tokenLine.includes('failed') && tokenLine.includes('[redacted]'), 'redaction keeps the surrounding words');
+const shortSlack = 'xox' + 'b-' + 'a'.repeat(9);
+const longSlack = 'xox' + 'a-' + 'a'.repeat(10);
+assert(redactError(shortSlack).includes(shortSlack), 'short slack-shaped string stays');
+assert(!redactError(longSlack).includes(longSlack), 'slack-shaped string of the minimum length is redacted');
+const shortGithub = 'gh' + 's_' + 'a'.repeat(19);
+const longGithub = 'gh' + 'o_' + 'a'.repeat(20);
+assert(redactError(shortGithub).includes(shortGithub), 'short github-shaped string stays');
+assert(!redactError(longGithub).includes(longGithub), 'github-shaped string of the minimum length is redacted');
 
 if (failed > 0) {
   console.error(failed + ' assertion(s) failed');
