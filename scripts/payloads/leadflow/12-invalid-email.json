@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "not-an-email",
+  "phone": "+55 11 90000-0009",
+  "company": "Example Studio",
+  "service": "Website",
+  "budget": "200",
+  "message": "This address should be rejected."
+}

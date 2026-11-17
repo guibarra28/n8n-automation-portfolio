@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "lead.general@example.com",
+  "phone": "+55 11 90000-0008",
+  "company": "Example Other",
+  "service": "Copywriting",
+  "budget": "100",
+  "message": "Not sure this is a fit. Sending a note anyway."
+}

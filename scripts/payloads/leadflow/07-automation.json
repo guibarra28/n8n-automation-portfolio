@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "lead.automation@example.com",
+  "phone": "+55 11 90000-0004",
+  "company": "Example Ops",
+  "service": "n8n",
+  "budget": "800",
+  "message": "Connect the contact form to a spreadsheet and send an email."
+}

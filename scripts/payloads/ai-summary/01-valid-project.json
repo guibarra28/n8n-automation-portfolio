@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "summary.project@example.com",
+  "phone": "+55 11 90000-0100",
+  "company": "Example Studio",
+  "service": "automation",
+  "budget": "1500",
+  "message": "We get website enquiries by email and want a short summary plus a priority for each one."
+}

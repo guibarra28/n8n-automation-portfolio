@@ -1,0 +1,14 @@
+{
+  "name": "n8n-automation-portfolio",
+  "private": true,
+  "type": "module",
+  "description": "Example n8n workflows for a freelance automation portfolio. No runtime dependencies.",
+  "scripts": {
+    "test": "node scripts/ci-check.mjs",
+    "build:workflows": "node scripts/build-workflows.mjs",
+    "send-samples": "node scripts/send-sample-payloads.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

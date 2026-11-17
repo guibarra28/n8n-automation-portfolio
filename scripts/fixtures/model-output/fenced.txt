@@ -1,0 +1,3 @@
+```json
+{"summary":"Pricing question.","intent":"pricing","priority_score":3,"priority_reason":"Asked for a price."}
+```

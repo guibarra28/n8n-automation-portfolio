@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "lead.enterprise@example.com",
+  "phone": "+55 11 90000-0003",
+  "company": "Example Enterprise",
+  "service": "Website",
+  "budget": "15000",
+  "message": "Rebuild the public site and connect it to the CRM."
+}

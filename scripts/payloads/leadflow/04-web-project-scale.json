@@ -1,0 +1,9 @@
+{
+  "name": "Sample Lead",
+  "email": "lead.scale@example.com",
+  "phone": "+55 21 90000-0002",
+  "company": "Example Scale",
+  "service": "web",
+  "budget": "5000",
+  "message": "Multi-page site with a client portal stub."
+}
